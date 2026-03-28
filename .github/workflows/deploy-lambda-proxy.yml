@@ -1,0 +1,58 @@
+name: Deploy Lambda Proxy
+
+on:
+  workflow_dispatch:
+    inputs:
+      stage:
+        description: Deployment stage label
+        required: true
+        default: dev
+      regions:
+        description: Comma-separated AWS regions
+        required: true
+        default: us-east-1,eu-west-1,ap-southeast-1
+      aws_role_to_assume:
+        description: IAM role ARN to assume via OIDC
+        required: true
+      aws_region:
+        description: Primary AWS region for credential bootstrap
+        required: true
+        default: us-east-1
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "pnpm"
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.8.1
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ github.event.inputs.aws_role_to_assume }}
+          aws-region: ${{ github.event.inputs.aws_region }}
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Deploy Lambda Proxy To Regions
+        env:
+          STAGE: ${{ github.event.inputs.stage }}
+          DEPLOY_REGIONS: ${{ github.event.inputs.regions }}
+        run: pnpm --filter @henry-vpn/lambda-proxy deploy:regions

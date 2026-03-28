@@ -35,10 +35,11 @@ function runCdk(region: string, action: "bootstrap" | "deploy"): Promise<void> {
         ];
 
   return new Promise((resolve, reject) => {
-    const child = spawn("pnpm", args, {
+    const pnpmCommand = process.platform === "win32" ? "pnpm.cmd" : "pnpm";
+
+    const child = spawn(pnpmCommand, args, {
       cwd: packageDir,
       stdio: "inherit",
-      shell: true,
       env: {
         ...process.env,
         CDK_DEFAULT_REGION: region

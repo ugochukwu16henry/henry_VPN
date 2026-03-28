@@ -1,0 +1,23 @@
+{
+  "name": "@henry-vpn/stealth-browser",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "fingerprint-generator": "^2.1.62",
+    "fingerprint-injector": "^2.1.62",
+    "playwright": "^1.52.0",
+    "playwright-extra": "^4.3.6",
+    "proxy-chain": "^2.5.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10"
+  }
+}

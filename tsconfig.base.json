@@ -1,12 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@henry-vpn/lambda-proxy": ["packages/lambda-proxy/src/index.ts"],
-      "@henry-vpn/residential-proxy": ["packages/residential-proxy/src/index.ts"],
-      "@henry-vpn/stealth-browser": ["packages/stealth-browser/src/index.ts"]
-    },
     "target": "ES2022",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",

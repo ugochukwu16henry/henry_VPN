@@ -3,6 +3,12 @@ import { spawn } from "node:child_process";
 const WIREGUARD_DIR = "packages/wireguard";
 
 export async function runWgCommand(action: string, peerName?: string): Promise<void> {
+  if (process.platform === "win32") {
+    throw new Error(
+      "WireGuard make targets are not available on native Windows shell. Run this command in WSL/Linux, or call the scripts directly in a Unix environment."
+    );
+  }
+
   const target = mapActionToMakeTarget(action);
   const args = ["-C", WIREGUARD_DIR, target];
 
@@ -36,7 +42,7 @@ function mapActionToMakeTarget(action: string): string {
 
 function runProcess(command: string, args: string[]): Promise<void> {
   return new Promise((resolve, reject) => {
-    const child = spawn(command, args, { stdio: "inherit", shell: true });
+    const child = spawn(command, args, { stdio: "inherit" });
 
     child.on("close", code => {
       if (code === 0) {
@@ -47,6 +53,13 @@ function runProcess(command: string, args: string[]): Promise<void> {
       reject(new Error(`${command} exited with code ${code ?? "unknown"}`));
     });
 
-    child.on("error", reject);
+    child.on("error", error => {
+      if ((error as NodeJS.ErrnoException).code === "ENOENT") {
+        reject(new Error(`Required command not found: ${command}`));
+        return;
+      }
+
+      reject(error);
+    });
   });
 }

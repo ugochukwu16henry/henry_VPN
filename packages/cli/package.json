@@ -1,0 +1,24 @@
+{
+  "name": "@henry-vpn/cli",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "henry-vpn": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@henry-vpn/lambda-proxy": "workspace:*",
+    "@henry-vpn/residential-proxy": "workspace:*",
+    "@henry-vpn/stealth-browser": "workspace:*",
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "dotenv": "^16.4.7"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10"
+  }
+}

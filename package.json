@@ -1,0 +1,13 @@
+{
+  "name": "henry-vpn",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@10.8.1",
+  "devDependencies": {
+    "typescript": "^5.8.2"
+  },
+  "scripts": {
+    "check": "pnpm -r --if-present typecheck",
+    "build": "pnpm -r --if-present build"
+  }
+}

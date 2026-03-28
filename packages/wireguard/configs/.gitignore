@@ -1,0 +1,6 @@
+*.conf
+keys/
+clients/
+*.key
+*.pub
+!.gitkeep

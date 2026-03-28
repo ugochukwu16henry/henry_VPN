@@ -7,7 +7,12 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "typecheck": "tsc -p tsconfig.json --noEmit"
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "cdk:bootstrap": "cdk bootstrap --app \"node --import tsx ./infra/cdk/app.ts\"",
+    "cdk:synth": "pnpm build && cdk synth --app \"node --import tsx ./infra/cdk/app.ts\"",
+    "cdk:deploy": "pnpm build && cdk deploy --require-approval never --app \"node --import tsx ./infra/cdk/app.ts\"",
+    "cdk:destroy": "pnpm build && cdk destroy --force --app \"node --import tsx ./infra/cdk/app.ts\"",
+    "deploy:regions": "node --import tsx ./infra/cdk/deploy-regions.ts"
   },
   "dependencies": {
     "@aws-sdk/client-lambda": "^3.799.0",
@@ -16,7 +21,9 @@
   "devDependencies": {
     "@types/aws-lambda": "^8.10.148",
     "@types/node": "^22.13.10",
+    "aws-cdk": "^2.1027.0",
     "aws-cdk-lib": "^2.191.0",
-    "constructs": "^10.4.2"
+    "constructs": "^10.4.2",
+    "tsx": "^4.20.0"
   }
 }

@@ -1,0 +1,130 @@
+{
+ "Resources": {
+  "LambdaProxyFunctionServiceRoleFF995CAC": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "HenryVpnLambdaProxy-dev-us-east-1/LambdaProxyFunction/ServiceRole/Resource"
+   }
+  },
+  "LambdaProxyFunction89C00AA7": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Architectures": [
+     "arm64"
+    ],
+    "Code": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-us-east-1"
+     },
+     "S3Key": "4457b4cbf6a0c9dde5cbcf91c3d788f3c3d0680660d122da960690b5413c9e4d.zip"
+    },
+    "FunctionName": "henry-vpn-proxy-us-east-1",
+    "Handler": "handler.handler",
+    "MemorySize": 512,
+    "Role": {
+     "Fn::GetAtt": [
+      "LambdaProxyFunctionServiceRoleFF995CAC",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs22.x",
+    "Timeout": 15
+   },
+   "DependsOn": [
+    "LambdaProxyFunctionServiceRoleFF995CAC"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "HenryVpnLambdaProxy-dev-us-east-1/LambdaProxyFunction/Resource",
+    "aws:asset:path": "asset.4457b4cbf6a0c9dde5cbcf91c3d788f3c3d0680660d122da960690b5413c9e4d",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "LambdaProxyFunctionFunctionUrl0CBE76E0": {
+   "Type": "AWS::Lambda::Url",
+   "Properties": {
+    "AuthType": "AWS_IAM",
+    "TargetFunctionArn": {
+     "Fn::GetAtt": [
+      "LambdaProxyFunction89C00AA7",
+      "Arn"
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "HenryVpnLambdaProxy-dev-us-east-1/LambdaProxyFunction/FunctionUrl/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/z3IQQ6CMBBA0bOwH0YEPICYeAAIazKUSgZKSZgCi6Z3N9Xo6v38HPPyhllCp6RqmFPDPfrGkZqBTum8oaUfCP1zt8rxauHxsv/+RbuZ+NvNBGBa0Ner0fFEA0jRkYh2gvcISIHVrmbtKhId4DMbRyPbMYBdB42TXI68xGuBWTIJc7rt1vGisf76Bi/izyK2AAAA"
+   },
+   "Metadata": {
+    "aws:cdk:path": "HenryVpnLambdaProxy-dev-us-east-1/CDKMetadata/Default"
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

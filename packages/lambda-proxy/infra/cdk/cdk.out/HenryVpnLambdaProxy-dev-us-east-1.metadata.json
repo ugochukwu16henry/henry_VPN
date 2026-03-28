@@ -1,0 +1,38 @@
+{
+  "/HenryVpnLambdaProxy-dev-us-east-1/BootstrapVersion": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "BootstrapVersion"
+    }
+  ],
+  "/HenryVpnLambdaProxy-dev-us-east-1/CheckBootstrapVersion": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CheckBootstrapVersion"
+    }
+  ],
+  "/HenryVpnLambdaProxy-dev-us-east-1/LambdaProxyFunction/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "LambdaProxyFunction89C00AA7"
+    }
+  ],
+  "/HenryVpnLambdaProxy-dev-us-east-1/CDKMetadata/Default": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "CDKMetadata"
+    }
+  ],
+  "/HenryVpnLambdaProxy-dev-us-east-1/LambdaProxyFunction/ServiceRole/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "LambdaProxyFunctionServiceRoleFF995CAC"
+    }
+  ],
+  "/HenryVpnLambdaProxy-dev-us-east-1/LambdaProxyFunction/FunctionUrl/Resource": [
+    {
+      "type": "aws:cdk:logicalId",
+      "data": "LambdaProxyFunctionFunctionUrl0CBE76E0"
+    }
+  ]
+}

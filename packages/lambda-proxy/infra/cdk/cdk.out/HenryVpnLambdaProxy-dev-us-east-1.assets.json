@@ -1,0 +1,36 @@
+{
+  "version": "53.0.0",
+  "files": {
+    "4457b4cbf6a0c9dde5cbcf91c3d788f3c3d0680660d122da960690b5413c9e4d": {
+      "displayName": "LambdaProxyFunction/Code",
+      "source": {
+        "path": "asset.4457b4cbf6a0c9dde5cbcf91c3d788f3c3d0680660d122da960690b5413c9e4d",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "current_account-us-east-1-4539207a": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-us-east-1",
+          "objectKey": "4457b4cbf6a0c9dde5cbcf91c3d788f3c3d0680660d122da960690b5413c9e4d.zip",
+          "region": "us-east-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-us-east-1"
+        }
+      }
+    },
+    "239995b552f336db59883d81bd0d37b4f580d9c0bc0ec05357678c57d0f6b6d1": {
+      "displayName": "HenryVpnLambdaProxy-dev-us-east-1 Template",
+      "source": {
+        "path": "HenryVpnLambdaProxy-dev-us-east-1.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "current_account-us-east-1-53a88f85": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-us-east-1",
+          "objectKey": "239995b552f336db59883d81bd0d37b4f580d9c0bc0ec05357678c57d0f6b6d1.json",
+          "region": "us-east-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-us-east-1"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}

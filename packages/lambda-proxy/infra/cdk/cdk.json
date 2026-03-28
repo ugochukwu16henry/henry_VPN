@@ -1,5 +1,5 @@
 {
-  "app": "node --import tsx ./infra/cdk/app.ts",
+  "app": "node --import tsx ./app.ts",
   "context": {
     "@aws-cdk/aws-lambda-nodejs:useLatestRuntimeVersion": true
   }

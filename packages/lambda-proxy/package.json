@@ -18,10 +18,12 @@
     "cdk:synth": "pnpm build && cdk synth --app \"node --import tsx ./infra/cdk/app.ts\"",
     "cdk:deploy": "pnpm build && cdk deploy --require-approval never --app \"node --import tsx ./infra/cdk/app.ts\"",
     "cdk:destroy": "pnpm build && cdk destroy --force --app \"node --import tsx ./infra/cdk/app.ts\"",
-    "deploy:regions": "node --import tsx ./infra/cdk/deploy-regions.ts"
+    "deploy:precheck": "node --import tsx ./infra/cdk/preflight.ts",
+    "deploy:regions": "pnpm deploy:precheck && node --import tsx ./infra/cdk/deploy-regions.ts"
   },
   "dependencies": {
     "@aws-sdk/client-lambda": "^3.799.0",
+    "@aws-sdk/client-sts": "^3.799.0",
     "axios": "^1.8.4"
   },
   "devDependencies": {

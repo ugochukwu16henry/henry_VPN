@@ -2,7 +2,7 @@ import { spawn } from "node:child_process";
 
 const WIREGUARD_DIR = "packages/wireguard";
 
-export async function runWgCommand(action: string, peerName?: string): Promise<void> {
+export async function runWgCommand(action: string, peerName?: string, value?: string): Promise<void> {
   if (process.platform === "win32") {
     throw new Error(
       "WireGuard make targets are not available on native Windows shell. Run this command in WSL/Linux, or call the scripts directly in a Unix environment."
@@ -11,12 +11,19 @@ export async function runWgCommand(action: string, peerName?: string): Promise<v
 
   const target = mapActionToMakeTarget(action);
   const args = ["-C", WIREGUARD_DIR, target];
+  const env: NodeJS.ProcessEnv = { ...process.env };
 
-  if (peerName) {
-    args.push(`PEER_NAME=${peerName}`);
+  if (["up", "down", "status"].includes(action) && value) {
+    args.push(`WG_PROFILE=${value}`);
   }
 
-  await runProcess("make", args);
+  const resolvedPeerName = peerName ?? value;
+
+  if (["add-peer", "revoke-peer"].includes(action) && resolvedPeerName) {
+    args.push(`PEER_NAME=${resolvedPeerName}`);
+  }
+
+  await runProcess("make", args, env);
 }
 
 function mapActionToMakeTarget(action: string): string {
@@ -40,9 +47,9 @@ function mapActionToMakeTarget(action: string): string {
   }
 }
 
-function runProcess(command: string, args: string[]): Promise<void> {
+function runProcess(command: string, args: string[], env: NodeJS.ProcessEnv): Promise<void> {
   return new Promise((resolve, reject) => {
-    const child = spawn(command, args, { stdio: "inherit" });
+    const child = spawn(command, args, { stdio: "inherit", env });
 
     child.on("close", code => {
       if (code === 0) {

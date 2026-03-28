@@ -8,6 +8,7 @@
     "typescript": "^5.8.2"
   },
   "scripts": {
+    "start": "node ./packages/cli/dist/index.js",
     "check": "pnpm -r --if-present typecheck",
     "build": "pnpm -r --if-present build",
     "verify:tls": "pnpm build && node ./scripts/verification/tls-ja3-check.mjs",

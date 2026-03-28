@@ -54,6 +54,38 @@ Notes:
 - Kill-switch check is intentionally skip-by-default unless KILLSWITCH_DISRUPTIVE=1.
 - TLS check warns if HTTP_PROXY / HTTPS_PROXY is not configured.
 
+## Country On Demand
+
+Use the same CLI with country-aware flags depending on your path.
+
+1. WireGuard (manual browsing):
+
+- Create per-country configs in packages/wireguard/configs (examples: uk.conf, jp.conf, us.conf).
+- Run in Linux/WSL:
+  - pnpm start -- wg up uk
+  - pnpm start -- wg down uk
+  - pnpm start -- wg status uk
+
+2. Lambda region hopping (cloud automation):
+
+- Rotate by region list:
+  - pnpm start -- proxy-rotate --function-base henry-vpn-proxy --regions us-east-1,eu-central-1,ap-northeast-1,sa-east-1
+- Or prefer a country mapping:
+  - pnpm start -- proxy-rotate --function-base henry-vpn-proxy --country jp
+
+3. Residential geo-targeting (provider credentials):
+
+- Set RES_PROXY_HOST, RES_PROXY_PORT, RES_PROXY_USERNAME, RES_PROXY_PASSWORD in .env.
+- Request country-specific exits:
+  - pnpm start -- proxy-test --url https://api.ipify.org?format=json --country gb
+
+4. Stealth browser locale/timezone/geolocation alignment:
+
+- Keep browser fingerprint signals aligned with selected country:
+  - pnpm start -- browse https://example.com --country fr
+
+Supported built-in country mappings: us, gb, de, fr, jp, br, ca, au.
+
 ## GitHub Actions
 
 ### CI workflow

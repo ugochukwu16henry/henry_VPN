@@ -4,6 +4,7 @@ export type SessionOptions = {
   username: string;
   password: string;
   mode?: SessionMode;
+  countryCode?: string;
   geo?: string;
   sessionId?: string;
 };
@@ -14,6 +15,10 @@ export function buildSessionUsername(options: SessionOptions): string {
 
   if (mode === "sticky") {
     parts.push(`session-${options.sessionId ?? crypto.randomUUID()}`);
+  }
+
+  if (options.countryCode) {
+    parts.push(`country-${options.countryCode.trim().toLowerCase()}`);
   }
 
   if (options.geo) {

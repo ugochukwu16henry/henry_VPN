@@ -12,6 +12,21 @@ into a unified developer toolkit:
 
 All four are surfaced through a single `henry-vpn` CLI.
 
+## Country-On-Demand Reference
+
+The implementation now supports country-aware routing and fingerprint alignment.
+
+| ISO2 | Country   | Preferred AWS Region(s)                    | Browser Locale/Timezone   |
+| ---- | --------- | ------------------------------------------ | ------------------------- |
+| us   | USA       | us-east-1, us-east-2, us-west-1, us-west-2 | en-US / America/New_York  |
+| gb   | UK        | eu-west-2                                  | en-GB / Europe/London     |
+| de   | Germany   | eu-central-1                               | de-DE / Europe/Berlin     |
+| fr   | France    | eu-west-3                                  | fr-FR / Europe/Paris      |
+| jp   | Japan     | ap-northeast-1                             | ja-JP / Asia/Tokyo        |
+| br   | Brazil    | sa-east-1                                  | pt-BR / America/Sao_Paulo |
+| ca   | Canada    | ca-central-1                               | en-CA / America/Toronto   |
+| au   | Australia | ap-southeast-2                             | en-AU / Australia/Sydney  |
+
 ---
 
 ## Monorepo Layout

@@ -8,8 +8,12 @@ export type ProxyAgents = {
   proxyUrl?: string;
 };
 
-export function createProxyAgents(targetUrl: string): ProxyAgents {
-  const proxyUrl = getProxyForUrl(targetUrl);
+export type ProxyAgentOptions = {
+  proxyUrl?: string;
+};
+
+export function createProxyAgents(targetUrl: string, options: ProxyAgentOptions = {}): ProxyAgents {
+  const proxyUrl = options.proxyUrl ?? getProxyForUrl(targetUrl);
 
   if (!proxyUrl) {
     return {};

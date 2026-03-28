@@ -4,6 +4,7 @@ import { browseTo, createBrowser, createStealthContext } from "@henry-vpn/stealt
 
 export type BrowseCommandOptions = {
   headless?: boolean;
+  countryCode?: string;
   proxyUrl?: string;
   storageStatePath?: string;
 };
@@ -14,6 +15,7 @@ export async function runBrowse(url: string, options: BrowseCommandOptions = {})
   });
 
   const { context, cleanup } = await createStealthContext(browser, {
+    countryCode: options.countryCode,
     proxyUrl: options.proxyUrl,
     storageStatePath: options.storageStatePath
   });

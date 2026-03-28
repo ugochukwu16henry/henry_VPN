@@ -3,10 +3,12 @@ import chalk from "chalk";
 import { fetchWithResidentialProxy } from "@henry-vpn/residential-proxy";
 import { invokeRotatedRequest } from "@henry-vpn/lambda-proxy";
 
-export async function runProxyTest(url: string): Promise<void> {
+export async function runProxyTest(url: string, countryCode?: string): Promise<void> {
   try {
     const response = await fetchWithResidentialProxy(url, {
       method: "GET"
+    }, {
+      countryCode
     });
 
     console.log(chalk.green(`Proxy test status: ${response.statusCode}`));
@@ -22,19 +24,24 @@ export async function runProxyTest(url: string): Promise<void> {
 export async function runProxyRotate(
   functionBaseName: string,
   targetUrl: string,
-  regions: string[]
+  regions: string[],
+  countryCode?: string
 ): Promise<void> {
   try {
-    const result = await invokeRotatedRequest(
+    const { response, plan } = await invokeRotatedRequest(
       functionBaseName,
       {
         targetUrl,
         method: "GET"
       },
-      regions
+      regions,
+      {
+        countryCode,
+        strategy: "random"
+      }
     );
 
-    console.log(chalk.cyan(`Invoked function in rotated region. Status: ${result.StatusCode ?? "unknown"}`));
+    console.log(chalk.cyan(`Invoked ${plan.functionName} in ${plan.region}. Status: ${response.StatusCode ?? "unknown"}`));
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     throw new Error(

@@ -22,6 +22,14 @@ on:
         description: Expected AWS account ID (optional safety check)
         required: false
         default: ""
+      run_post_deploy_smoke:
+        description: Run lambda invoke smoke checks after deployment
+        required: false
+        default: "true"
+      smoke_target_url:
+        description: URL used by lambda smoke invocation
+        required: false
+        default: https://api.ipify.org?format=json
 
 permissions:
   id-token: write
@@ -61,3 +69,10 @@ jobs:
           DEPLOY_REGIONS: ${{ github.event.inputs.regions }}
           EXPECTED_AWS_ACCOUNT_ID: ${{ github.event.inputs.expected_aws_account_id }}
         run: pnpm --filter @henry-vpn/lambda-proxy deploy:regions
+
+      - name: Post-Deploy Smoke
+        if: ${{ github.event.inputs.run_post_deploy_smoke == 'true' }}
+        env:
+          DEPLOY_REGIONS: ${{ github.event.inputs.regions }}
+          SMOKE_TARGET_URL: ${{ github.event.inputs.smoke_target_url }}
+        run: pnpm --filter @henry-vpn/lambda-proxy deploy:smoke

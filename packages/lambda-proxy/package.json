@@ -19,7 +19,8 @@
     "cdk:deploy": "pnpm build && cdk deploy --require-approval never --app \"node --import tsx ./infra/cdk/app.ts\"",
     "cdk:destroy": "pnpm build && cdk destroy --force --app \"node --import tsx ./infra/cdk/app.ts\"",
     "deploy:precheck": "node --import tsx ./infra/cdk/preflight.ts",
-    "deploy:regions": "pnpm deploy:precheck && node --import tsx ./infra/cdk/deploy-regions.ts"
+    "deploy:regions": "pnpm deploy:precheck && node --import tsx ./infra/cdk/deploy-regions.ts",
+    "deploy:smoke": "node --import tsx ./infra/cdk/post-deploy-smoke.ts"
   },
   "dependencies": {
     "@aws-sdk/client-lambda": "^3.799.0",

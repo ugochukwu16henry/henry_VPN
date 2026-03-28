@@ -7,11 +7,13 @@ chromium.use(StealthPlugin());
 export type BrowserFactoryOptions = {
   headless?: boolean;
   proxyServer?: string;
+  channel?: LaunchOptions["channel"];
 };
 
 export async function createBrowser(options: BrowserFactoryOptions = {}): Promise<Browser> {
+  const configuredChannel = options.channel ?? getChannelFromEnv();
+
   const launchOptions: LaunchOptions = {
-    channel: "chrome",
     headless: options.headless ?? true,
     args: [
       "--disable-blink-features=AutomationControlled",
@@ -26,5 +28,19 @@ export async function createBrowser(options: BrowserFactoryOptions = {}): Promis
     };
   }
 
+  if (configuredChannel) {
+    launchOptions.channel = configuredChannel;
+  }
+
   return chromium.launch(launchOptions);
+}
+
+function getChannelFromEnv(): LaunchOptions["channel"] | undefined {
+  const value = process.env.STEALTH_BROWSER_CHANNEL?.trim();
+
+  if (!value || value.toLowerCase() === "default") {
+    return undefined;
+  }
+
+  return value as LaunchOptions["channel"];
 }

@@ -2,12 +2,17 @@
   "name": "henry-vpn",
   "private": true,
   "version": "0.1.0",
+  "type": "module",
   "packageManager": "pnpm@10.8.1",
   "devDependencies": {
     "typescript": "^5.8.2"
   },
   "scripts": {
     "check": "pnpm -r --if-present typecheck",
-    "build": "pnpm -r --if-present build"
+    "build": "pnpm -r --if-present build",
+    "verify:tls": "pnpm build && node ./scripts/verification/tls-ja3-check.mjs",
+    "verify:webrtc": "pnpm build && node ./scripts/verification/webrtc-check.mjs",
+    "verify:killswitch": "node ./scripts/verification/killswitch-check.mjs",
+    "verify:all": "pnpm build && node ./scripts/verification/run-all.mjs"
   }
 }
